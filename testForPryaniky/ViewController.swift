@@ -144,15 +144,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.cellForItem(at: IndexPath.init(row: idSelectedCell, section: 0))?.isSelected = false
+        collectionView.cellForItem(at: indexPath)?.isSelected = true
         idSelectedCell = indexPath.row
         button?.isEnabled = true
         button?.alpha = 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        button?.isEnabled = false
-        button?.alpha = 0.5
-    }
     
     func searchNeedData(name:String) -> dataFromJson?{
         for element in data {
@@ -190,7 +188,7 @@ extension ViewController: UIPickerViewDelegate{
 }
 extension ViewController: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        idSelectedCell = viewArray.firstIndex(of: "selector")!
+        collectionView(collectionView!, didSelectItemAt: IndexPath.init(row: viewArray.firstIndex(of: "selector")!, section: 0))
         button?.isEnabled = true
         button?.alpha = 1
         idSelectedPicker = searchNeedData(name: "selector")!.data.variants![row].id
